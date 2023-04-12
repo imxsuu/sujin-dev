@@ -20,7 +20,8 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
         envVar(key: 'IMAGE_NAME', value: imageName)
     ],
     containers: [
-        containerTemplate(name: 'podman', image: 'sjjeon/podman:latest, ttyEnabled: true, command: 'cat', privileged: true)]) {
+        containerTemplate(name: 'podman', image: 'sjjeon/podman:latest', ttyEnabled: true, command: 'cat', privileged: true)
+    ]) {
 
     node(podLabel) {
         checkout scm
