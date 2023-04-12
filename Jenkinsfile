@@ -2,7 +2,7 @@
 def podLabel = "web"
 def cloud = env.CLOUD ?: "kubernetes"
 def registryCredsID = env.REGISTRY_CREDENTIALS ?: "registry-credentials-id"
-def serviceAccount = env.SERVICE_ACCOUNT ?: "jenkins"
+def serviceAccount = env.SERVICE_ACCOUNT ?: "jenkins-admin"
 
 // Pod Environment Variables
 def namespace = env.NAMESPACE ?: "default"
