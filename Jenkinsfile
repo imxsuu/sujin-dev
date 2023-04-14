@@ -40,18 +40,16 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
             }
 
             stage('Docker - Push Image to Registry') {
-               # withCredentials([usernamePassword(usernameVariable: 'admin',
-               #                                   passwordVariable: 'Ketilinux11')]) {
-                    sh """
-                    #!/bin/sh
+                sh """
+                #!/bin/sh
 
-                    # Construct Image Name
-                    IMAGE=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME}:${env.BUILD_NUMBER}
+                # Construct Image Name
+                IMAGE=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME}:${env.BUILD_NUMBER}
 
-                    podman login -u ${USERNAME} -p ${PASSWORD} ${REGISTRY} --tls-verify=false
-
-                    podman push \${IMAGE} --tls-verify=false
-                    """
+                podman login -u ${USERNAME} -p ${PASSWORD} ${REGISTRY} --tls-verify=false
+           
+                podman push \${IMAGE} --tls-verify=false
+                """
                 }
             }
         }
