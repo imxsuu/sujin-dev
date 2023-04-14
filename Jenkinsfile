@@ -5,9 +5,9 @@ def registryCredsID = env.REGISTRY_CREDENTIALS ?: "registry-credentials-id"
 def serviceAccount = env.SERVICE_ACCOUNT ?: "jenkins-admin"
 
 // Pod Environment Variables
-def namespace = env.NAMESPACE ?: "default"
-def registry = env.REGISTRY ?: "docker.io"
-def imageName = env.IMAGE_NAME ?: "ibmcase/bluecompute-web"
+def namespace = env.NAMESPACE ?: "sjjeon"
+def registry = env.REGISTRY ?: "10.0.1.150:5000"
+def imageName = env.IMAGE_NAME ?: "podman"
 
 /*
   Optional Pod Environment Variables
