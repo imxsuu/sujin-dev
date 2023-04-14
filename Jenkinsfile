@@ -40,8 +40,8 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
             }
 
             stage('Docker - Push Image to Registry') {
-                withCredentials([usernamePassword(usernameVariable: 'admin',
-                                                  passwordVariable: 'Ketilinux11')]) {
+               # withCredentials([usernamePassword(usernameVariable: 'admin',
+               #                                   passwordVariable: 'Ketilinux11')]) {
                     sh """
                     #!/bin/sh
 
