@@ -27,10 +27,10 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
         checkout scm
 
         // Docker
-        container(name:'podman', shell:'/bin/bash') {
+        container(name:'podman', shell:'/bin/sh') {
             stage('Docker - Build Image') {
                 sh """
-                #!/bin/bash
+                #!/bin/sh
 
                 # Construct Image Name
                 IMAGE=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME}:${env.BUILD_NUMBER}
@@ -44,7 +44,7 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
                                                usernameVariable: 'USERNAME',
                                                passwordVariable: 'PASSWORD')]) {
                     sh """
-                    #!/bin/bash
+                    #!/bin/sh
 
                     # Construct Image Name
                     IMAGE=${REGISTRY}/${NAMESPACE}/${IMAGE_NAME}:${env.BUILD_NUMBER}
