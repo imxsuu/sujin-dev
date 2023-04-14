@@ -9,6 +9,8 @@ RUN apt-get update -qq \
     && apt-get -qq -y install podman \
     && apt-get install -y iptables
 
+COPY . .
+
 # Change default storage driver to vfs
 RUN sed -i "s/overlay/vfs/g" /etc/containers/storage.conf
 
