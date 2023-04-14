@@ -50,7 +50,6 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
            
                 podman push \${IMAGE} --tls-verify=false
                 """
-                }
             }
         }
     }
