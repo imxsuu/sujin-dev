@@ -18,3 +18,4 @@ RUN echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 
 # Add docker.io as a search registry
 #RUN sed -i '0,/\[\]/s/\[\]/["docker.io"]/' /etc/containers/registries.conf
+# test
