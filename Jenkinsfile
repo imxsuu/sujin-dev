@@ -28,7 +28,7 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
 
         // Docker
         container(name:'podman', shell:'/bin/sh') {
-            stage('Docker - Build Image') {
+            stage('Podman - Build Image') {
                 sh """
                 #!/bin/sh
 
@@ -39,7 +39,7 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
                 """
             }
 
-            stage('Docker - Push Image to Registry') {
+            stage('Podman - Push Image to Harbor') {
                 sh """
                 #!/bin/sh
 
