@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: argocd-test-nginx
+  labels:
+    run: my-nginx
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 32000
+    port: 80
+    protocol: TCP
+  selector:
+    run: my-nginx
