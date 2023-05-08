@@ -1,4 +1,4 @@
-FROM ubuntu:20.04
+FROM ubuntu:16.04
 #FROM docker.io/library/ubuntu:16.04
 #FROM 10.0.1.150:5000/sjjeon/podman
 
