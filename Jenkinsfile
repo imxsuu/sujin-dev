@@ -54,28 +54,27 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
             }
 
             stage('K8S Manifest Update') {
-                steps {
                     git credentialsId: 'gitlab_credentials',
                         url: 'http://10.0.2.121:80/ketiops/imxsuu.git',
                         branch: 'main'
 
-            sh "sed -i 's/my-app:.*\$/my-app:${currentBuild.number}/g' deployment.yaml"
-            sh "git add deployment.yaml"
-            sh "git commit -m '[UPDATE] my-app ${currentBuild.number} image versioning'"
-            sshagent(credentials: ['gitlab_credentials']) {
-                sh "git remote set-url origin git@10.0.2.121:80:ketiops/imxsuu.git"
-                sh "git push -u origin master"
-             }
-        }
-        post {
-                failure {
-                  echo 'K8S Manifest Update failure !'
-                }
-                success {
-                  echo 'K8S Manifest Update success !'
-                }
-        }
-    }
+                    sh "sed -i 's/my-app:.*\$/my-app:${currentBuild.number}/g' deployment.yaml"
+                    sh "git add deployment.yaml"
+                    sh "git commit -m '[UPDATE] my-app ${currentBuild.number} image versioning'"
+                    sshagent(credentials: ['gitlab_credentials']) {
+                        sh "git remote set-url origin git@10.0.2.121:80:ketiops/imxsuu.git"
+                        sh "git push -u origin master"
+                    }
+            }
+            post {
+                    failure {
+                      echo 'K8S Manifest Update failure !'
+                    }
+                    success {
+                      echo 'K8S Manifest Update success !'
+                    }
+            }
+         
         }
     }
 }
