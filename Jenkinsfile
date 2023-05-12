@@ -77,7 +77,7 @@ podTemplate(label: 'podman-argocd',
                             credentialsId: 'gitlab',
                         ]]
                 ])
-                sshagent(credentials: ['gitlab_credentials']){
+                sshagent(credentials: ['gitlab_access_token']){
                     sh("""
                         sed -i 's/argocd-deploy:.*\$/argocd-deploy:${currentBuild.number}/g' deployment.yaml
                         git add deployment.yaml
