@@ -74,10 +74,10 @@ podTemplate(label: 'podman-argocd',
                         extensions: scm.extensions,
                         userRemoteConfigs: [[
                             url: 'git@10.0.2.121:80:ketiops/imxsuu.git',
-                            credentialsId: 'gitlab',
+                            credentialsId: 'gitlab_access_token',
                         ]]
                 ])
-                sshagent(credentials: ['gitlab']){
+                sshagent(credentials: ['gitlab_access_token']){
                     sh("""
                         #!/usr/bin/env bash
                         set +x
