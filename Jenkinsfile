@@ -4,7 +4,7 @@ def cloud = env.CLOUD ?: "kubernetes"
 def registryCredsID = env.REGISTRY_CREDENTIALS ?: "registry-credentials-id"
 def serviceAccount = env.SERVICE_ACCOUNT ?: "jenkins-admin"
 
-// Pod Environment Variables
+// Pod Eironment Variables
 def namespace = env.NAMESPACE ?: "sjjeon"
 def registry = env.REGISTRY ?: "10.0.1.150:5000"
 def imageName1 = env.IMAGE_NAME1 ?: "podman"
@@ -40,8 +40,10 @@ podTemplate(label: 'podman-argocd',
         stage('Build'){
             container('podman'){
                 sh("""
+                    #!/bin/sh
+
                     # Construct Image Name
-                    IMAGE = ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME}:${env.BUILD_NUMBER}
+                    IMAGE = 10.0.1.150:5000/sjjeon/argocd-deploy:${env.BUILD_NUMBER}
                     
                     podman build -t \${IMAGE} .
                 """)
@@ -51,10 +53,12 @@ podTemplate(label: 'podman-argocd',
         stage('Push'){
             container('podman'){
                 sh("""
+                    #!/bin/sh
+
                     # Construct Image Name
-                    IMAGE = ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME}:${env.BUILD_NUMBER}
+                    IMAGE = 10.0.1.150:5000/sjjeon/argocd-deploy:${env.BUILD_NUMBER}
                    
-                    podman login -u admin -p Ketilinux11 ${REGISTRY} --tls-verify=false
+                    podman login -u admin -p Ketilinux11 10.0.1.150:5000 --tls-verify=false
 
                     podman push \${IMAGE} --tls-verify=false
                 """)
