@@ -21,13 +21,15 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
     ],
     containers: [
         // containerTemplate(name: 'podman', image: 'ibmcase/podman:ubuntu-16.04', ttyEnabled: true, command: 'cat', privileged: true) 
-        containerTemplate(name: 'podman', image: 'mgoltzsche/podman', ttyEnabled: true, command: 'cat', privileged: true)
+        containerTemplate(name: 'podman', image: 'mgoltzsche/podman', ttyEnabled: true, command: 'cat', privileged: true),
+        // Add ArgoCD container
+        containerTemplate(name: 'argocd', image: 'argoproj/argo-cd-ci-builder:latest', command: 'cat', ttyEnabled: true) 
   ]) {
 
     node(podLabel) {
         checkout scm
 
-        // Docker
+        // Podman
         container(name:'podman', shell:'/bin/sh') {
             stage('Podman - Build Image') {
                 sh """
@@ -52,12 +54,14 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
                 podman push \${IMAGE} --tls-verify=false
                 """
             }
-
+        }
+        
+        //ArgoCD
+        container('argocd') {
             stage('K8S Manifest Update') {
                     git credentialsId: 'gitlab',
                         url: 'http://10.0.2.121:80/ketiops/imxsuu.git',
                         branch: 'main'
-
                     sh "sed -i 's/my-app:.*\$/my-app:${currentBuild.number}/g' deployment.yaml"
                     sh "git add deployment.yaml"
                     sh "git commit -m '[UPDATE] my-app ${currentBuild.number} image versioning'"
