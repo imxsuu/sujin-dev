@@ -43,7 +43,7 @@ podTemplate(label: 'podman-argocd',
                     #!/bin/sh
 
                     # Construct Image Name
-                    IMAGE = 10.0.1.150:5000/sjjeon/argocd-deploy:${env.BUILD_NUMBER}
+                    IMAGE=10.0.1.150:5000/sjjeon/argocd-deploy:${env.BUILD_NUMBER}
                     
                     podman build -t \${IMAGE} .
                 """)
@@ -56,7 +56,7 @@ podTemplate(label: 'podman-argocd',
                     #!/bin/sh
 
                     # Construct Image Name
-                    IMAGE = 10.0.1.150:5000/sjjeon/argocd-deploy:${env.BUILD_NUMBER}
+                    IMAGE=10.0.1.150:5000/sjjeon/argocd-deploy:${env.BUILD_NUMBER}
                    
                     podman login -u admin -p Ketilinux11 10.0.1.150:5000 --tls-verify=false
 
