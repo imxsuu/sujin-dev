@@ -23,7 +23,7 @@ podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVa
         // containerTemplate(name: 'podman', image: 'ibmcase/podman:ubuntu-16.04', ttyEnabled: true, command: 'cat', privileged: true) 
         containerTemplate(name: 'podman', image: 'mgoltzsche/podman', ttyEnabled: true, command: 'cat', privileged: true),
         // Add ArgoCD container
-        containerTemplate(name: 'argocd', image: 'argoproj/argo-cd-ci-builder:latest', command: 'cat', ttyEnabled: true) 
+        containerTemplate(name: 'argocd', image: 'argoproj/argo-cd-ci-builder:latest', command: 'cat', ttyEnabled: true), 
   ]) {
 
     node(podLabel) {
