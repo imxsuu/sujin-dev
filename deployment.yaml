@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: argocd-test-nginx
+  name: argocd-test
 spec:
   selector:
     matchLabels:
-      run: my-nginx
+      run: my-app
   replicas: 2
   template:
     metadata:
       labels:
-        run: my-nginx
+        run: my-app
     spec:
       containers:
-      - name: my-nginx
-        image: nginx
+      - name: my-app
+        image: 10.0.1.150:5000/sjjeon/argocd-deploy:{Jenkins build number}
         ports:
         - containerPort: 80
