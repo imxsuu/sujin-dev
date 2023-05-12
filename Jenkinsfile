@@ -74,10 +74,10 @@ podTemplate(label: 'podman-argocd',
                         extensions: scm.extensions,
                         userRemoteConfigs: [[
                             url: 'http://10.0.2.121:80/ketiops/imxsuu.git',
-                            credentialsId: 'gitlab_credentials',
+                            credentialsId: 'gitlab',
                         ]]
                 ])
-                sshagent(credentials: ['gitlab_credentials']){
+                sshagent(credentials: ['gitlab']){
                     sh("""
                         sed -i 's/argocd-deploy:.*\$/argocd-deploy:${currentBuild.number}/g' deployment.yaml
                         git add deployment.yaml
