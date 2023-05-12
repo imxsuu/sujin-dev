@@ -7,7 +7,8 @@ def serviceAccount = env.SERVICE_ACCOUNT ?: "jenkins-admin"
 // Pod Environment Variables
 def namespace = env.NAMESPACE ?: "sjjeon"
 def registry = env.REGISTRY ?: "10.0.1.150:5000"
-def imageName = env.IMAGE_NAME ?: "podman"
+def imageName1 = env.IMAGE_NAME1 ?: "podman"
+def imageName2 = env.IMAGE_NAME2 ?: "argocd"
 
 /*
   Optional Pod Environment Variables
@@ -17,7 +18,8 @@ def helmHome = env.HELM_HOME ?: env.JENKINS_HOME + "/.helm"
 podTemplate(label: podLabel, cloud: cloud, serviceAccount: serviceAccount, envVars: [
         envVar(key: 'NAMESPACE', value: namespace),
         envVar(key: 'REGISTRY', value: registry),
-        envVar(key: 'IMAGE_NAME', value: imageName)
+        envVar(key: 'IMAGE_NAME1', value: imageName1),
+        envVar(key: 'IMAGE_NAME2', value: imageName2)
     ],
     containers: [
         // containerTemplate(name: 'podman', image: 'ibmcase/podman:ubuntu-16.04', ttyEnabled: true, command: 'cat', privileged: true) 
