@@ -39,28 +39,28 @@ podTemplate(label: 'podman-argocd',
         
         stage('Build'){
             container('podman'){
-                script {
+                sh("""
                     # Construct Image Name
                     IMAGE = ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME}:${env.BUILD_NUMBER}
                     
                     podman build -t \${IMAGE} .
-                }
+                """)
             }
         }
 
         stage('Push'){
             container('podman'){
-                script {
+                sh("""
                     # Construct Image Name
                     IMAGE = ${REGISTRY}/${NAMESPACE}/${IMAGE_NAME}:${env.BUILD_NUMBER}
                    
                     podman login -u admin -p Ketilinux11 ${REGISTRY} --tls-verify=false
 
                     podman push \${IMAGE} --tls-verify=false
-                    }
-                }
+                """)
             }
         }
+        
 
         stage('Deploy'){
             container('argo'){
