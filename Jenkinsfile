@@ -74,10 +74,10 @@ podTemplate(label: 'podman-argocd',
                         extensions: scm.extensions,
                         userRemoteConfigs: [[
                             url: 'http://10.0.2.121:80/ketiops/imxsuu.git',
-                            credentialsId: 'gitlab_access_token',
+                            credentialsId: 'gitlab',
                         ]]
                 ])
-                sshagent(credentials: ['gitlab_access_token']){
+                sshagent(credentials: ['gitlab']){
                     sh("""
                         #!/usr/bin/env bash
                         set +x
@@ -85,7 +85,7 @@ podTemplate(label: 'podman-argocd',
                         git config --global user.email "imxsuu@gmail.com"
                         git checkout main
                         cd env/dev && kustomize edit set image sjjeon/argocd-deploy:${BUILD_NUMBER}
-                        git commit -a -m "[UPDATE] change the image tag"
+                        git commit -a -m "[UPDATE] change the image tag versioning"
                         git push
                     """)
                 }
