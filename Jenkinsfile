@@ -73,7 +73,7 @@ podTemplate(label: 'podman-argocd',
                         branches: [[name: '*/main' ]],
                         extensions: scm.extensions,
                         userRemoteConfigs: [[
-                            url: 'git@10.0.2.121:80:ketiops/imxsuu.git',
+                            url: 'http://10.0.2.121:80/ketiops/imxsuu.git',
                             credentialsId: 'gitlab_access_token',
                         ]]
                 ])
