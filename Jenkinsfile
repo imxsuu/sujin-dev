@@ -17,7 +17,8 @@ podTemplate(label: 'podman-argocd',
       name: 'podman',
       image: 'mgoltzsche/podman',
       command: 'cat',
-      ttyEnabled: true
+      ttyEnabled: true,
+      privileged: ture
     ),
     containerTemplate(
       name: 'argocd',
