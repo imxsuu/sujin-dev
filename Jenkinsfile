@@ -74,7 +74,7 @@ podTemplate(label: 'podman-argocd',
                         extensions: scm.extensions,
                         userRemoteConfigs: [[
                             url: 'http://10.0.2.121:80/ketiops/imxsuu.git',
-                            credentialsId: 'jenkins-ssh',
+                            credentialsId: 'gitlab',
                         ]]
                 ])
                 sshagent(credentials: ['jenkins-ssh']){
