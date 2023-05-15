@@ -79,9 +79,6 @@ podTemplate(label: 'podman-argocd',
                 ])
                 sshagent(credentials: ['jenkins-ssh']){
                     sh("""
-                        #!/usr/bin/env bash
-                        set +x
-                        ssh -o StrictHostKeyChecking=no
                         git checkout main
                         sed -i 's/argocd-deploy:.*\$/argocd-deploy:${currentBuild.number}/g' deployment.yaml
                         git add deployment.yaml
