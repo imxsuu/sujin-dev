@@ -68,7 +68,7 @@ podTemplate(label: 'podman-argocd',
         
 
         stage('Deploy'){
-            container('argo'){
+            container('argocd'){
                 checkout([$class: 'GitSCM',
                         branches: [[name: '*/main' ]],
                         extensions: scm.extensions,
