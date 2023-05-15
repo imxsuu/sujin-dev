@@ -77,7 +77,7 @@ podTemplate(label: 'podman-argocd',
                             credentialsId: 'gitlab',
                         ]]
                 ])
-                sshagent(credentials: ['gitlab_access_token']){
+                sshagent(credentials: ['jenkins-ssh']){
                     sh("""
                         #!/usr/bin/env bash
                         ssh -o StrictHostKeyChecking=no"
