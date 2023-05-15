@@ -74,11 +74,15 @@ podTemplate(label: 'podman-argocd',
                         extensions: scm.extensions,
                         userRemoteConfigs: [[
                             url: 'http://10.0.2.121:80/ketiops/imxsuu.git',
-                            credentialsId: 'gitlab',
+                            credentialsId: 'jenkins-ssh',
                         ]]
                 ])
                 sshagent(credentials: ['jenkins-ssh']){
                     sh("""
+			#!/usr/bin/env bash
+                        set +x
+                        export GIT_SSH_COMMAND="ssh -oStrictHostKeyChecking=no"
+                        git config --global user.email "admin@example.com"
                         git checkout main
                         sed -i 's/argocd-deploy:.*\$/argocd-deploy:${currentBuild.number}/g' deployment.yaml
                         git add deployment.yaml
