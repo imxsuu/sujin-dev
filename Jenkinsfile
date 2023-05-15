@@ -79,6 +79,8 @@ podTemplate(label: 'podman-argocd',
                 ])
                 sshagent(credentials: ['gitlab_access_token']){
                     sh("""
+                        #!/usr/bin/env bash
+                        ssh -o StrictHostKeyChecking=no"
                         sed -i 's/argocd-deploy:.*\$/argocd-deploy:${currentBuild.number}/g' deployment.yaml
                         git add deployment.yaml
                         git commit -m "[UPDATE] change the image versioning ${currentBuild.number}"
