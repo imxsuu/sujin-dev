@@ -17,3 +17,5 @@ spec:
         image: 10.0.1.150:5000/sjjeon/argocd-deploy:111
         ports:
         - containerPort: 80
+      imagePullSecrets:
+      - name: regcred

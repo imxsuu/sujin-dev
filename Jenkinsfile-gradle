@@ -1,0 +1,110 @@
+pipeline {
+    agent any
+    tools {
+      gradle 'gradle_7.5.1'
+    }
+ environment {
+      harborRegistry = '10.0.1.150:5000/sjjeon'
+      harborRegistryCredential = 'harbor'
+  }
+  stages {
+
+    stage('Checkout Application Git Branch') {
+        steps {
+            git credentialsId: 'gitlab',
+                url: 'http://10.0.2.121:80/KETIOPS/imxsuu.git',
+                branch: 'main'
+        }
+        post {
+                failure {
+                  echo 'Repository clone failure !'
+                }
+                success {
+                  echo 'Repository clone success !'
+                }
+        }
+    }
+
+
+    stage('gardle Jar Build') {
+            steps {
+                sh 'chmod +x gradlew'
+                sh './gradlew bootjar'
+            }
+            post {
+                    failure {
+                      echo 'Gradle jar build failure !'
+                    }
+                    success {
+                      echo 'Gradle jar build success !'
+                    }
+            }
+
+    }
+
+    stage('Docker Image Build') {
+            steps {
+                sh "cp build/libs/springtest-0.0.1-SNAPSHOT.jar ./ROOT.jar"
+                sh "docker build . -t ${harborRegistry}:${currentBuild.number}"
+                sh "docker build . -t ${harborRegistry}:latest"
+            }
+            post {
+                    failure {
+                      echo 'Docker image build failure !'
+                    }
+                    success {
+                      echo 'Docker image build success !'
+                    }
+            }
+    }
+
+
+    stage('Docker Image Push') {
+            steps {
+                      sh "echo 도커허브비밀번호 | docker login -u dogsnack --password-stdin"
+                      sh "docker push ${harborRegistry}:${currentBuild.number}"
+                      sh "docker push ${harborRegistry}:latest"
+                      sleep 10 /* Wait uploading */
+                  
+            }
+            post {
+                    failure {
+                      echo 'Docker Image Push failure !'
+                      sh "docker rmi ${harborRegistry}:${currentBuild.number}"
+                      sh "docker rmi ${harborRegistry}:latest"
+                    }
+                    success {
+                      echo 'Docker image push success !'
+                      sh "docker rmi ${harborRegistry}:${currentBuild.number}"
+                      sh "docker rmi ${harborRegistry}:latest"
+                    }
+            }
+    }
+    
+    stage('K8S Manifest Update') {
+        steps {
+            git credentialsId: 'credential_kbo',
+                url: 'http://git.kbotest.shop/kbo/manifest.git', /* URL변경에 따른 수정 필요 */
+                branch: 'main'
+            sh "git config --global user.email 'test@naver.com'"
+            sh "git config --global user.name 'kbo'"
+            sh "sed -i 's/spring:.*\$/spring:${currentBuild.number}/g' springapp_deployment.yaml"
+            sh "git add springapp_deployment.yaml"
+            sh "git commit -m '[UPDATE] springapp ${currentBuild.number} image versioning'"
+            sshagent (credentials: ['GitLab_SSH_Key']) {
+                sh "git remote set-url origin git@git.kbotest.shop:kbo/manifest.git" /* URL변경에 따른 수정 필요 */
+                sh "git push -u origin main"
+            }  
+        }
+        post {
+                failure {
+                  echo 'K8S Manifest Update failure !@'
+                }
+                success {
+                  echo 'K8S Manifest Update success !!'
+                }
+        }
+    }
+
+  }
+}
