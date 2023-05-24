@@ -1,16 +1,3 @@
-// Pod Template
-def podLabel = "web"
-def cloud = env.CLOUD ?: "kubernetes"
-def registryCredsID = env.REGISTRY_CREDENTIALS ?: "registry-credentials-id"
-def serviceAccount = env.SERVICE_ACCOUNT ?: "jenkins-admin"
-
-// Pod Eironment Variables
-def namespace = env.NAMESPACE ?: "sjjeon"
-def registry = env.REGISTRY ?: "10.0.1.150:5000"
-def imageName1 = env.IMAGE_NAME1 ?: "podman"
-def imageName2 = env.IMAGE_NAME2 ?: "argocd"
-
-
 podTemplate(label: 'podman-argocd',
   containers: [
     containerTemplate(
