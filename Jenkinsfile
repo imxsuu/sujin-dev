@@ -73,7 +73,7 @@ podTemplate(label: 'podman-argocd',
                         branches: [[name: '*/main' ]],
                         extensions: scm.extensions,
                         userRemoteConfigs: [[
-                            url: 'http://root:ketilinux@10.0.2.121:80/ketiops/imxsuu.git',
+                            url: 'http://root:ketilinux@10.0.2.121:80/ketiops/manifest.git',
                             credentialsId: 'jenkins-ssh',
                         ]]
                 ])
