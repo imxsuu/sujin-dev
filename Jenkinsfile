@@ -66,12 +66,12 @@ podTemplate(label: 'podman-argocd',
                 ])
                 sshagent(credentials: ['jenkins-ssh']){
                     sh("""
-			#!/usr/bin/env bash
+			#!/usr/bin bash
                         set +x
                         export GIT_SSH_COMMAND="ssh -oStrictHostKeyChecking=no"
                         git config --global user.email "admin@example.com"
                         git checkout main
-                        kustomize edit set image 10.0.1.150:5000/sjjeon/argocd-deploy:${BUILD_NUMBER}
+                        cd overlay/dev && kustomize edit set image 10.0.1.150:5000/sjjeon/argocd-deploy:${BUILD_NUMBER}
                         sed -i 's/argocd-deploy:.*\$/argocd-deploy:${currentBuild.number}/g' deployment.yaml
                         git add deployment.yaml
                         git commit -m "[UPDATE] change the image versioning ${currentBuild.number}"
