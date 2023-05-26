@@ -25,6 +25,7 @@ RUN sed -i "s/overlay/vfs/g" /etc/containers/storage.conf
 
 RUN echo "nameserver 8.8.8.8" >> /etc/resolv.conf
 
+CMD ["sleep", "360"]
 # Add docker.io as a search registry
 #RUN sed -i '0,/\[\]/s/\[\]/["docker.io"]/' /etc/containers/registries.conf
 # test
